@@ -17,7 +17,7 @@ function Sidebar({ onChange, selectedNode, nodeValue }) {
       ) : (
         <div>
           <p>Message</p>
-          <input value={nodeValue["text"]} onChange={onChange} />
+          <input value={nodeValue["message"]} onChange={onChange} />
         </div>
       )}
     </div>
