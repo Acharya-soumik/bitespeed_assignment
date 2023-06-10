@@ -20,7 +20,7 @@ const nodeTypes = {
   message: MessageNode,
 };
 
-let initState = { text: "Hi, Message" };
+let initState = { message: "Hi, Message" };
 
 const DnDFlow = () => {
   const reactFlowWrapper = useRef(null);
@@ -30,6 +30,8 @@ const DnDFlow = () => {
   const [selectedNode, setSelectedNode] = useState(false);
   const [nodeName, setNodeName] = useState(initState);
 
+  console.log(nodeName, "is node name");
+
   useEffect(() => {
     setNodes((nds) =>
       nds.map((node) => {
@@ -37,7 +39,7 @@ const DnDFlow = () => {
         // in order to notify react flow about the change
         node.data = {
           ...node.data,
-          text: nodeName["text"],
+          text: nodeName["message"],
         };
 
         return node;
@@ -75,12 +77,12 @@ const DnDFlow = () => {
         id: getId(),
         type,
         position,
-        data: { label: `${type} node`, text: nodeName["text"] },
+        data: { label: `${type} node`, text: nodeName["message"] },
       };
 
       setNodes((nds) => nds.concat(newNode));
     },
-    [reactFlowInstance]
+    [reactFlowInstance, nodeName]
   );
 
   const isValidConnection = (connection) => {
@@ -93,7 +95,7 @@ const DnDFlow = () => {
   };
 
   const handleTextChange = (e) => {
-    setNodeName((prev) => ({ ...prev, text: e.target.value }));
+    setNodeName((prev) => ({ ...prev, message: e.target.value }));
   };
 
   const onSave = () => {
@@ -103,6 +105,7 @@ const DnDFlow = () => {
     });
     if (Object.keys(keys).length === nodes.length) {
       alert("saved!");
+      setSelectedNode(false);
     } else {
       alert("error, cannot save");
     }
